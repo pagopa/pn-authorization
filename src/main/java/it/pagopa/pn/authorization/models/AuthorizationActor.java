@@ -11,6 +11,11 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+/**
+ * Actor class.
+ * It is used by the rules and represents the actor that must be authorized.
+ * This class can be updated, adding more keys if rules require it.
+ */
 public class AuthorizationActor {
     private String cxType;
     private String cxId;

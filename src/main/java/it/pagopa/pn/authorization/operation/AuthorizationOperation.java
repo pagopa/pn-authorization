@@ -8,6 +8,13 @@ import it.pagopa.pn.authorization.rules.NotificationSenderRead;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+/**
+ * This class contains the list of the available operations.
+ * It can be extended to add a not surveyed operation, even if
+ * it is strongly not recommended.
+ *
+ * @see Operation
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AuthorizationOperation {
     public static final Operation<AuthorizationActor, NotificationResource> NOTIFICATION_SENDER_READ =

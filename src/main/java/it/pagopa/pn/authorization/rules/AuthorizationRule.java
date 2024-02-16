@@ -6,6 +6,9 @@ import it.pagopa.pn.authorization.BaseAuthorizationOutcome;
  * Rule is the smallest part of an authorization process.
  * It contains a specific check that must be met to pass the authorization.
  * This is an abstract class and each definition of a rule must expand it.
+ *
+ * @param <A> generic type for the Actor
+ * @param <R> generic type for the Resource
  */
 public abstract class AuthorizationRule<A, R> {
 

@@ -25,8 +25,10 @@ public class AuthorizationDirector {
      * This method is useful for those cases that are not yet configured in the library.
      * Avoid using this method if it is not strictly necessary.
      *
-     * @param operation the specific operation (i.e. NOTIFICATION_SENDER_READ).
-     * @param rule      the rule linked to the specific operation.
+     * @param operation      the specific operation (i.e. NOTIFICATION_SENDER_READ).
+     * @param rule           the rule linked to the specific operation.
+     * @param actorMapper    mapper to map the external Actor to the internal one used by the rule
+     * @param resourceMapper mapper to map the external Resource to the internal one used by the rule
      * @return the instance of the director.
      */
     protected <A, R, AM, RM> AuthorizationDirector addConfig(Operation<A, R> operation, AuthorizationRule<A, R> rule, Function<AM, A> actorMapper, Function<RM, R> resourceMapper) {
@@ -39,7 +41,9 @@ public class AuthorizationDirector {
      * The method used to add known configuration to the authorization process.
      * This method must be used in most cases.
      *
-     * @param operation the specific operation (i.e. NOTIFICATION_SENDER_READ).
+     * @param operation      the specific operation (i.e. NOTIFICATION_SENDER_READ).
+     * @param actorMapper    mapper to map the external Actor to the internal one used by the rule
+     * @param resourceMapper mapper to map the external Resource to the internal one used by the rule
      * @return the instance of the director.
      */
     public <A, R, AM, RM> AuthorizationDirector addConfig(Operation<A, R> operation, Function<AM, A> actorMapper, Function<RM, R> resourceMapper) {
@@ -53,6 +57,10 @@ public class AuthorizationDirector {
      * The method used to evaluate the rules and return the result of the check.
      *
      * @param operation the operation, among those added, that must be checked
+     * @param actor     the external actor that must be authorized (it will be converted in the internal class
+     *                  through the mapper defined during the configuration process)
+     * @param resource  the external resource over witch check the authorization (it will be converted in the internal class
+     *                  through the mapper defined during the configuration process)
      * @return result of the evaluation.
      */
     public <A, R, AM, RM> BaseAuthorizationOutcome check(Operation<A, R> operation, AM actor, RM resource) throws Exception {
@@ -69,8 +77,6 @@ public class AuthorizationDirector {
             // evaluate the rule
             return rule.evaluate(internalActor, internalResource);
         }
-
-        // return outcome;
         return new BaseAuthorizationOutcome();
     }
 }

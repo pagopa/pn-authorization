@@ -8,15 +8,15 @@ import lombok.Setter;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
 /**
  * Notification class.
  * It is used by the rules and represents a type of resource over witch check the authorization.
  * This class can be updated, adding more keys if rules require it.
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class NotificationResource {
     String senderPaId;
     String group;

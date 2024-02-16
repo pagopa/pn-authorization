@@ -5,15 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
 /**
  * Mandate class.
  * It is used by the NotificationResource class and represent the mandate.
  * This class can be updated, adding more keys if rules require it.
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class MandateResource {
     private String mandateId;
     private String dateFrom;

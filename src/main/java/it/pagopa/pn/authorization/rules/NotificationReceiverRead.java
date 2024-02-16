@@ -9,8 +9,20 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This is the rule that checks if an actor can read a specific notification as a PF
+ */
 public class NotificationReceiverRead extends AuthorizationRule<AuthorizationActor, NotificationResource> {
 
+    /**
+     * This method evaluate if:
+     * - actor is a PF
+     * - actor is the receiver or the delegate of the notification
+     *
+     * @param actor    this is the actor that must be authorized
+     * @param resource this is the data over witch check the authorization
+     * @return the result of the evaluation
+     */
     @Override
     public BaseAuthorizationOutcome evaluate(AuthorizationActor actor, NotificationResource resource) {
         boolean authorized;
@@ -45,6 +57,13 @@ public class NotificationReceiverRead extends AuthorizationRule<AuthorizationAct
         return new BaseAuthorizationOutcome(authorized, reason);
     }
 
+    /**
+     * Checks if the notifications has mandates and they are still valid
+     *
+     * @param mandates list of the mandates linked to the notification
+     * @param sentAt   when the notification was sent
+     * @return the result of the check
+     */
     private boolean checkMandate(List<MandateResource> mandates, OffsetDateTime sentAt) {
         return mandates.isEmpty() || OffsetDateTime.parse(Objects.requireNonNull(mandates.get(0).getDateFrom())).isAfter(sentAt);
     }

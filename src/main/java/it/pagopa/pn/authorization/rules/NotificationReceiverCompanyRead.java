@@ -9,7 +9,21 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This is the rule that checks if an actor can read a specific notification as a PG
+ */
 public class NotificationReceiverCompanyRead extends AuthorizationRule<AuthorizationActor, NotificationResource> {
+
+    /**
+     * This method evaluate if:
+     * - actor is a PG
+     * - groups of the actor contain the group of the notification
+     * - actor is the receiver or the delegate of the notification
+     *
+     * @param actor    this is the actor that must be authorized
+     * @param resource this is the data over witch check the authorization
+     * @return the result of the evaluation
+     */
     @Override
     public BaseAuthorizationOutcome evaluate(AuthorizationActor actor, NotificationResource resource) {
         boolean authorized;
@@ -49,10 +63,24 @@ public class NotificationReceiverCompanyRead extends AuthorizationRule<Authoriza
         return new BaseAuthorizationOutcome(authorized, reason);
     }
 
+    /**
+     * Checks if the notifications has mandates and they are still valid
+     *
+     * @param mandates list of the mandates linked to the notification
+     * @param sentAt   when the notification was sent
+     * @return the result of the check
+     */
     private boolean checkMandate(List<MandateResource> mandates, OffsetDateTime sentAt) {
         return mandates.isEmpty() || OffsetDateTime.parse(Objects.requireNonNull(mandates.get(0).getDateFrom())).isAfter(sentAt);
     }
 
+    /**
+     * Checks if actor has groups and if its groups contains the group of the notification
+     *
+     * @param groups actor groups
+     * @param group  notification group
+     * @return the result of the check
+     */
     private boolean checkGroups(List<String> groups, String group) {
         // if groups is null or is empty, it means that the actor is an administrator and can access the resource
         // if groups is not null and not empty, it means that the actor can access the resource only if in its groups there is the resource's one

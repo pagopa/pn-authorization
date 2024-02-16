@@ -15,3 +15,6 @@ target/
 .history
 .vscode
 target
+
+# Mac .DS_Store
+.DS_Store
